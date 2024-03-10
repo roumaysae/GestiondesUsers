@@ -58,16 +58,16 @@ public class UsersAppSpringApplication {
             userService.addRoleToUser("Roumaysae","enseignant");
 */
             try{
-                User user = userService.autheticate("user1","123456");
+                User user = userService.autheticate("saad","123456");
                 System.out.println(user.getUserId());
                 System.out.println(user.getUserName());
-                System.out.println("roles ->");
+                System.out.println(user.getPassword());
                 user.getRoles().forEach(r->{
-                    System.out.println(" "+ r);
+                    System.out.println("Role => "+r);
                 });
             }catch (Exception e){
                 e.printStackTrace();
             }
+        };
         };//lannotation lambda  ca revient au retourner la methode qui je revoit un objet qui a en parametres args
     }
-}
