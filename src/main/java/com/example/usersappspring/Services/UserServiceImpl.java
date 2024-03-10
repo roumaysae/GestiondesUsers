@@ -52,13 +52,21 @@ public class UserServiceImpl implements UserService {
 //charger l'user dans la memoire :
         User user = findUserByUserName(userName);
         Role role = findRoleByRoleName(roleName);
-        if(user.getRoles() !=null){
+        if (user.getRoles() != null) {
             user.getRoles().add(role);
         }
         //in association bidirectional POO :
         // il faut ajouter les roles aux users ainsi qu'on ajoute users to roles
         role.getUsers().add(user);
-     //   userRepository.save(user);//c'est pas necessaire d'ajouter save car c'est transactionnel commit sur la modiification de la base de donnees
+        //   userRepository.save(user);//c'est pas necessaire d'ajouter save car c'est transactionnel commit sur la modiification de la base de donnees
 
+    }
+
+    @Override
+    public User autheticate(String userName, String password) {
+        User user = userRepository.findByUserName(userName);
+        if(user==null) throw new RuntimeException("Bad credentials !!");
+        if (user.getPassword().equals(password)) return user;
+        throw new RuntimeException("Bad credentials !!");
     }
 }

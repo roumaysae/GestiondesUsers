@@ -7,6 +7,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.stream.Stream;
@@ -19,6 +21,10 @@ public class UsersAppSpringApplication {
     }
 
     @Bean
+    PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+    @Bean
     CommandLineRunner start(UserService userService){
         return args ->  {
            /* Stream.of("roumaysae","aymane","ikram").forEach(name -> {
@@ -27,7 +33,7 @@ public class UsersAppSpringApplication {
                     u.setPassword("123456");
                     userService.addNewUser(u);
             });*/
-            Stream.of("meryem","sundus","abdlah").forEach(name -> {
+            Stream.of("lamia","user2","user3").forEach(name -> {
                 User u = new User();
                 u.setUserName(name);
                 u.setPassword("123789");
@@ -39,7 +45,7 @@ public class UsersAppSpringApplication {
                         userService.addNewRole(r);
                   });*/
 
-                    Stream.of("docteur","student","prof").forEach(name->{
+                    Stream.of("role1","role2","role3").forEach(name->{
                         Role r = new Role();
                         r.setRoleName(name);
                         userService.addNewRole(r);
@@ -51,6 +57,17 @@ public class UsersAppSpringApplication {
             userService.addRoleToUser("aymane","etudiant");
             userService.addRoleToUser("Roumaysae","enseignant");
 */
+            try{
+                User user = userService.autheticate("user1","123456");
+                System.out.println(user.getUserId());
+                System.out.println(user.getUserName());
+                System.out.println("roles ->");
+                user.getRoles().forEach(r->{
+                    System.out.println(" "+ r);
+                });
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         };//lannotation lambda  ca revient au retourner la methode qui je revoit un objet qui a en parametres args
     }
 }

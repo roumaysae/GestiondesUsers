@@ -11,5 +11,5 @@ public interface UserService {
     User findUserByUserName(String UserName);
     Role findRoleByRoleName(String RoleName);
     void addRoleToUser(String userName , String roleName); // add role to an user(UserName is unique and ROLENAME is unique)
-
+    User autheticate(String userName,String password);
 }
