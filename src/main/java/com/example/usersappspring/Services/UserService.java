@@ -2,10 +2,10 @@ package com.example.usersappspring.Services;
 
 import com.example.usersappspring.entities.Role;
 import com.example.usersappspring.entities.User;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 public interface UserService {
     User addNewUser(User user);
-
     com.example.usersappspring.entities.Role addNewRole(com.example.usersappspring.entities.Role role);
  //we can find a user based on userName
     User findUserByUserName(String UserName);

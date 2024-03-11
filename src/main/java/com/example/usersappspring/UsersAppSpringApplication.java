@@ -7,6 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -33,30 +34,34 @@ public class UsersAppSpringApplication {
                     u.setPassword("123456");
                     userService.addNewUser(u);
             });*/
-            Stream.of("lamia","user2","user3").forEach(name -> {
+            Stream.of("Roumaysae","ikram","aymane").forEach(name -> {
                 User u = new User();
                 u.setUserName(name);
                 u.setPassword("123789");
-                userService.addNewUser(u);
-            });
+             try {
+                 userService.addNewUser(u);
+             }catch (DataIntegrityViolationException ex){
+ ex.printStackTrace();
+             }
+             });
              /*       Stream.of("manager","etudiant","enseignant").forEach(name->{
                         Role r = new Role();
                         r.setRoleName(name);
                         userService.addNewRole(r);
                   });*/
 
-                    Stream.of("role1","role2","role3").forEach(name->{
+                    Stream.of("manager","enseignant","etudiant").forEach(name->{
                         Role r = new Role();
                         r.setRoleName(name);
                         userService.addNewRole(r);
                     });
 
             //affecter a l'user les roles qu'il convient
-      /*      userService.addRoleToUser("Roumaysae","manager");
-            userService.addRoleToUser("ikram","enseeignant");
+         userService.addRoleToUser("Roumaysae","manager");
+            userService.addRoleToUser("ikram","enseignant");
             userService.addRoleToUser("aymane","etudiant");
             userService.addRoleToUser("Roumaysae","enseignant");
-*/
+
             try{
                 User user = userService.autheticate("saad","123456");
                 System.out.println(user.getUserId());
